@@ -71,9 +71,7 @@ if __name__ == '__main__':
     model.compile('adam', loss=hyperparameters['loss'], metrics=['acc'])
 
     image_data_generator = ImageDataGenerator(
-        zoom_range=0.2,
-        vertical_flip=True,
-        horizontal_flip=True
+
     )
 
     batch_size = hyperparameters['batch_size']
