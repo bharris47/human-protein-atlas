@@ -1,16 +1,28 @@
 import json
-import multiprocessing
 import os
 import shutil
 from argparse import ArgumentParser
 from datetime import datetime
 
+import numpy as np
 from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras_preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
+from sklearn.utils import compute_class_weight
 
 from protein_atlas.data import load_data
 from protein_atlas.model import simple_convnet
+
+
+def get_class_weight(y_true):
+    class_counts = y_true.sum(0)
+    pos = 0
+    y_weight = np.zeros(class_counts.sum())
+    for i, count in enumerate(class_counts):
+        y_weight[pos:pos + count] = i
+        pos += count
+    return compute_class_weight('balanced', np.arange(y_true.shape[-1]), y_weight)
+
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -30,6 +42,8 @@ if __name__ == '__main__':
     X, y = load_data(args.train_path, args.image_path)
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     del X, y
+
+    class_weight = get_class_weight(y_train)
 
     mean, std = X_train.mean(), X_train.std()
     print('training mean: {} std: {}'.format(mean, std))
@@ -70,6 +84,7 @@ if __name__ == '__main__':
         steps_per_epoch=len(X_train) // batch_size,
         epochs=100,
         validation_data=(X_val, y_val),
+        class_weight=class_weight,
         callbacks=[
             ModelCheckpoint(checkpoint_format),
             TensorBoard(log_dir=log_dir)
