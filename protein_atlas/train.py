@@ -75,6 +75,7 @@ if __name__ == '__main__':
 
     image_data_generator = ImageDataGenerator(
         zoom_range=0.2,
+        vertical_flip=True,
         horizontal_flip=True
     )
 
