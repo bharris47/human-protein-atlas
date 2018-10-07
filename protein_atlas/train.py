@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 
 from keras.callbacks import ModelCheckpoint, TensorBoard
+from keras_preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
 from protein_atlas.data import load_data
@@ -53,10 +54,19 @@ if __name__ == '__main__':
     model.summary()
     model.compile('adam', loss=hyperparameters['loss'], metrics=['acc'])
 
-    model.fit(
-        x=X_train,
-        y=y_train,
-        batch_size=hyperparameters['batch_size'],
+    image_data_generator = ImageDataGenerator(
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
+    )
+
+    batch_size = hyperparameters['batch_size']
+    model.fit_generator(
+        generator=image_data_generator.flow(X_train, y_train, batch_size=batch_size),
+        steps_per_epoch=len(X_train) // batch_size,
         epochs=100,
         validation_data=(X_val, y_val),
         callbacks=[
