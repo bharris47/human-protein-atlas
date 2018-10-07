@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 
+TRAIN_MEAN = 13.378813743591309
+TRAIN_STD = 25.18636131286621
+
 
 def get_channel_filename(image_id, channel):
     return '{image_id}_{channel}.png'.format(image_id=image_id, channel=channel)
@@ -19,3 +22,8 @@ def merge_channels(channels):
 
 def augment_image(image_data_generator, image):
     return image_data_generator.random_transform(image)
+
+
+def preprocess(image_or_images):
+    image_or_images -= TRAIN_MEAN
+    image_or_images /= TRAIN_STD

@@ -6,11 +6,12 @@
 
 ### Simple Convnet
 
-Baseline convolutional approach to get familiar with the data.
+Baseline convolutional approach to get familiar with the data. Uses green channel only.
 
-Date|Epochs Trained|Augmentation|Hyperparameters|Val Macro F1|Test Macro F1|
-|---|---|---|---|---|---|
-2018-10-06|TBD|No|[link](hyperparameters/simple_convnet_v1.json)|TBD|TBD|
+Date|Commit|Epochs Trained|Augmentation|Artifacts|Val Macro F1|Test Macro F1|
+|---|---|---|---|---|---|---|
+2018-10-06|[1a99729](https://github.com/bharris47/human-protein-atlas/commit/1a99729dab0a660003fdf353e80dae4ed5f183c9)|17|No|[link](models/simple_convnet_v1/2018-10-06)|0.363|0.206|
+
 
 ### Triplet Model
 
