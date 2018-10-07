@@ -74,6 +74,5 @@ if __name__ == '__main__':
             ModelCheckpoint(checkpoint_format),
             TensorBoard(log_dir=log_dir)
         ],
-        use_multiprocessing=True,
-        workers=multiprocessing.cpu_count()
+        use_multiprocessing=True
     )
