@@ -1,4 +1,5 @@
 import json
+import multiprocessing
 import os
 import shutil
 from argparse import ArgumentParser
@@ -72,5 +73,7 @@ if __name__ == '__main__':
         callbacks=[
             ModelCheckpoint(checkpoint_format),
             TensorBoard(log_dir=log_dir)
-        ]
+        ],
+        use_multiprocessing=True,
+        workers=multiprocessing.cpu_count()
     )
