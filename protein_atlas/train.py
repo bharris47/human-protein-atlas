@@ -73,6 +73,5 @@ if __name__ == '__main__':
         callbacks=[
             ModelCheckpoint(checkpoint_format),
             TensorBoard(log_dir=log_dir)
-        ],
-        use_multiprocessing=True
+        ]
     )
