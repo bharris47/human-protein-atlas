@@ -15,13 +15,15 @@ from protein_atlas.model import simple_convnet
 
 
 def get_class_weight(y_true):
+    classes = np.arange(y_true.shape[-1])
     class_counts = y_true.sum(0)
     pos = 0
     y_weight = np.zeros(class_counts.sum())
     for i, count in enumerate(class_counts):
         y_weight[pos:pos + count] = i
         pos += count
-    return compute_class_weight('balanced', np.arange(y_true.shape[-1]), y_weight)
+    return {i: weight
+            for i, weight in enumerate(compute_class_weight('balanced', classes, y_weight))}
 
 
 if __name__ == '__main__':
@@ -44,6 +46,7 @@ if __name__ == '__main__':
     del X, y
 
     class_weight = get_class_weight(y_train)
+    print('class weight: {}'.format(class_weight))
 
     mean, std = X_train.mean(), X_train.std()
     print('training mean: {} std: {}'.format(mean, std))
