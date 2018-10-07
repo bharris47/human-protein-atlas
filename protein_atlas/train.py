@@ -46,9 +46,6 @@ if __name__ == '__main__':
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     del X, y
 
-    class_weight = get_class_weight(y_train)
-    print('class weight: {}'.format(class_weight))
-
     mean, std = X_train.mean(), X_train.std()
     print('training mean: {} std: {}'.format(mean, std))
 
@@ -85,7 +82,6 @@ if __name__ == '__main__':
         steps_per_epoch=len(X_train) // batch_size,
         epochs=100,
         validation_data=(X_val, y_val),
-        class_weight=class_weight,
         callbacks=[
             ModelCheckpoint(checkpoint_format),
             TensorBoard(log_dir=log_dir)
