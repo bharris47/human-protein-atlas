@@ -22,8 +22,9 @@ def get_class_weight(y_true):
     for i, count in enumerate(class_counts):
         y_weight[pos:pos + count] = i
         pos += count
+    weights = np.sqrt(compute_class_weight('balanced', classes, y_weight))
     return {i: weight
-            for i, weight in enumerate(compute_class_weight('balanced', classes, y_weight))}
+            for i, weight in enumerate(weights)}
 
 
 if __name__ == '__main__':
@@ -73,10 +74,6 @@ if __name__ == '__main__':
     model.compile('adam', loss=hyperparameters['loss'], metrics=['acc'])
 
     image_data_generator = ImageDataGenerator(
-        rotation_range=40,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
         zoom_range=0.2,
         horizontal_flip=True
     )
