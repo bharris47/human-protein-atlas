@@ -10,7 +10,7 @@ Baseline convolutional approach to get familiar with the data.
 
 Date|Epochs Trained|Augmentation|Hyperparameters|Val Macro F1|Test Macro F1|
 |---|---|---|---|---|---|
-2018-10-06|TBD|No|[link](hyperparamerters/simple_convnet_v1.json)|TBD|TBD|
+2018-10-06|TBD|No|[link](hyperparameters/simple_convnet_v1.json)|TBD|TBD|
 
 ### Triplet Model
 
